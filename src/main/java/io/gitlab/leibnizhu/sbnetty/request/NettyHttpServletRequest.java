@@ -211,7 +211,11 @@ public class NettyHttpServletRequest implements HttpServletRequest {
 
     @Override
     public StringBuffer getRequestURL() {
-        return null;
+        StringBuffer sb = new StringBuffer(requestUri);
+        if( queryString != null ) {
+        	sb.append('?').append(queryString);
+        }
+		return  sb;
     }
 
     @Override
@@ -542,6 +546,9 @@ public class NettyHttpServletRequest implements HttpServletRequest {
 
     @Override
     public void setAttribute(String name, Object o) {
+    	if( o == null ) {
+    		return;
+    	}
         attributes.put(name, o);
     }
 
